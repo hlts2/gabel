@@ -1,4 +1,4 @@
-package model
+package main
 
 //Config is config.yaml Model
 type Config struct {
