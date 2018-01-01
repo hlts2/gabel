@@ -30,7 +30,18 @@ func init() {
 
 func run(args []string) error {
 	if configPath == "" {
-		return errors.New("Config File Does Not Exist")
+		return errorUsage()
 	}
 	return nil
+}
+
+func errorUsage() error {
+	return errors.New(`Error: config file does not exist
+Usage:
+   gabel run <option>
+
+Available Options:
+   -s, --set   Set config file path for gabel
+               $ gabel run -s config.yaml
+	`)
 }
