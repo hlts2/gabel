@@ -1,5 +1,5 @@
 # gabel
-gabel is tools for creating machine learning teacher data
+gabel is command line tools for creating machine learning teacher data
 
 ## Installation
 
