@@ -1,7 +1,7 @@
 package gabel
 
-//Config is config.yaml Model
-type Config struct {
+//LabelingInfo is config.yaml Model
+type LabelingInfo struct {
 	Path   string  `yaml:"path"`
 	Labels []Label `yaml:"labels"`
 }

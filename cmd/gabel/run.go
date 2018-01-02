@@ -41,14 +41,19 @@ func run(args []string) error {
 		return err
 	}
 
-	var c gabel.Config
-	if err = yaml.Unmarshal(b, &c); err != nil {
+	var l gabel.LabelingInfo
+	if err = yaml.Unmarshal(b, &l); err != nil {
 		return err
 	}
 
-	fmt.Println(c)
+	c := &gabel.Config{
+		LabelingInfo: l,
+		Stdin:        os.Stdin,
+		Stdout:       os.Stdout,
+		Stderr:       os.Stderr,
+	}
 
-	return nil
+	return c.Run()
 }
 
 func errorUsage() error {
