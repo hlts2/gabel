@@ -1,0 +1,9 @@
+path: origin.csv
+labels:
+    - name: fail
+    - values:
+        - 0
+
+    - name: success
+    - values:
+        - 1

@@ -3,9 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
 
+	"github.com/hlts2/gabel"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v2"
 )
 
 var runCmd = &cobra.Command{
@@ -32,6 +35,19 @@ func run(args []string) error {
 	if configPath == "" {
 		return errorUsage()
 	}
+
+	b, err := ioutil.ReadFile(configPath)
+	if err != nil {
+		return err
+	}
+
+	var c gabel.Config
+	if err = yaml.Unmarshal(b, &c); err != nil {
+		return err
+	}
+
+	fmt.Println(c)
+
 	return nil
 }
 
