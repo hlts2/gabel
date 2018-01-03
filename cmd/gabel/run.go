@@ -26,6 +26,11 @@ var (
 	configPath string
 )
 
+//OutputFilePath is the output file for the result
+const (
+	OutputFilePath = "res/labeld.csv"
+)
+
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.PersistentFlags().StringVarP(&configPath, "set", "s", "", "set config file")
@@ -46,9 +51,22 @@ func run(args []string) error {
 		return err
 	}
 
+	rFile, err := os.OpenFile(l.Path, os.O_RDONLY, 0755)
+	if err != nil {
+		return err
+	}
+
+	wFile, err := os.OpenFile(l.Path, os.O_CREATE|os.O_WRONLY, 0755)
+	if err != nil {
+		rFile.Close()
+		return err
+	}
+
 	c := &gabel.Config{
 		LabelingInfo: l,
 		Stdin:        os.Stdin,
+		RFile:        rFile,
+		WFile:        wFile,
 	}
 
 	return c.Run()

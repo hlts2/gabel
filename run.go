@@ -1,11 +1,15 @@
 package gabel
 
-import "io"
+import (
+	"io"
+	"os"
+)
 
 //Config is Gabel Config structure
 type Config struct {
 	LabelingInfo
-	Stdin io.Reader
+	Stdin        io.Reader
+	RFile, WFile *os.File
 }
 
 //Run labeling process
