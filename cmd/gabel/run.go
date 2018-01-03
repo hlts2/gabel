@@ -27,7 +27,7 @@ var (
 	configPath string
 )
 
-//OutputFilePath is the output file for the result
+//Output file Config for the result
 const (
 	OutputRootDir  = "res"
 	OutputFileName = "labeld.csv"
