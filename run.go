@@ -5,8 +5,7 @@ import "io"
 //Config is Gabel Config structure
 type Config struct {
 	LabelingInfo
-	Stdin          io.Reader
-	Stdout, Stderr io.Writer
+	Stdin io.Reader
 }
 
 //Run labeling process

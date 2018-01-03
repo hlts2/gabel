@@ -49,8 +49,6 @@ func run(args []string) error {
 	c := &gabel.Config{
 		LabelingInfo: l,
 		Stdin:        os.Stdin,
-		Stdout:       os.Stdout,
-		Stderr:       os.Stderr,
 	}
 
 	return c.Run()
