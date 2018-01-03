@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 
 	"github.com/hlts2/gabel"
 	"github.com/spf13/cobra"
@@ -28,7 +29,8 @@ var (
 
 //OutputFilePath is the output file for the result
 const (
-	OutputFilePath = "res/labeld.csv"
+	OutputRootDir  = "res"
+	OutputFileName = "labeld.csv"
 )
 
 func init() {
@@ -51,12 +53,16 @@ func run(args []string) error {
 		return err
 	}
 
-	rFile, err := os.OpenFile(l.Path, os.O_RDONLY, 0755)
+	rFile, err := os.OpenFile(l.Path, os.O_RDONLY, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	wFile, err := os.OpenFile(l.Path, os.O_CREATE|os.O_WRONLY, 0755)
+	if err := os.Mkdir(OutputRootDir, os.ModePerm); err != nil {
+		return err
+	}
+
+	wFile, err := os.OpenFile(filepath.Join(OutputRootDir, OutputFileName), os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	if err != nil {
 		rFile.Close()
 		return err
