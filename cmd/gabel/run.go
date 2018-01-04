@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/hlts2/gabel"
-	"github.com/hlts2/gabel/utils"
+	"github.com/hlts2/gabel/helpers"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
