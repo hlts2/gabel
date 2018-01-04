@@ -1,6 +1,7 @@
 package gabel
 
 import (
+	"encoding/csv"
 	"io"
 )
 
@@ -17,6 +18,6 @@ const (
 )
 
 //Run labeling process
-func (c *Config) Run() error {
+func (c *Config) Run(reader *csv.Reader, writer *csv.Writer) error {
 	return nil
 }

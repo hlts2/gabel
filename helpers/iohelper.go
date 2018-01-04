@@ -1,4 +1,4 @@
-package utils
+package helpers
 
 import "os"
 
@@ -13,12 +13,12 @@ func Mkdir(path string) error {
 //CreateFile generate file of given path
 func CreateFile(name string, flag int) (*os.File, error) {
 	if ok := isExist(name); ok {
-		file, err := OpenFile(name, flag)
+		file, err := OpenFile(name, os.O_CREATE|flag)
 		file.Truncate(0)
 		return file, err
 	}
 
-	return OpenFile(name, flag)
+	return OpenFile(name, os.O_CREATE|flag)
 }
 
 //OpenFile opens file

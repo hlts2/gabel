@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/csv"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 
 	"github.com/hlts2/gabel"
 	"github.com/hlts2/gabel/helpers"
@@ -47,7 +49,7 @@ func run(args []string) error {
 		return err
 	}
 
-	if err := utils.Mkdir(gabel.DirForResult); err != nil {
+	if err := helpers.Mkdir(gabel.DirForResult); err != nil {
 		return err
 	}
 
@@ -56,7 +58,28 @@ func run(args []string) error {
 		Stdin:        os.Stdin,
 	}
 
-	return c.Run()
+	rF, err := helpers.OpenFile(c.Path, os.O_RDONLY)
+	if err != nil {
+		return err
+	}
+
+	name := filepath.Join(gabel.DirForResult, gabel.OutputFileName)
+	wF, err := helpers.CreateFile(name, os.O_WRONLY)
+	if err != nil {
+		rF.Close()
+		return err
+	}
+
+	defer func() {
+		wF.Close()
+		rF.Close()
+	}()
+
+	writer := csv.NewWriter(wF)
+	reader := csv.NewReader(rF)
+	reader.LazyQuotes = true
+
+	return c.Run(reader, writer)
 }
 
 func runError() error {
