@@ -2,6 +2,7 @@ package gabel
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 )
 
@@ -19,5 +20,15 @@ const (
 
 //Run labeling process
 func (c *Config) Run(reader *csv.Reader, writer *csv.Writer) error {
+	for {
+		records, err := reader.Read()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return err
+		}
+
+		fmt.Println(records)
+	}
 	return nil
 }
