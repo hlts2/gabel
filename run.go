@@ -2,15 +2,19 @@ package gabel
 
 import (
 	"io"
-	"os"
 )
 
-//Config is Gabel Config structure
+//Config is gabel config structure
 type Config struct {
 	LabelingInfo
-	Stdin        io.Reader
-	RFile, WFile *os.File
+	Stdin io.Reader
 }
+
+//Output file Config for the result
+const (
+	DirForResult   = "GabelResult"
+	OutputFileName = "labeld.csv"
+)
 
 //Run labeling process
 func (c *Config) Run() error {

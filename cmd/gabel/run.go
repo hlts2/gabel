@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 
 	"github.com/hlts2/gabel"
+	"github.com/hlts2/gabel/utils"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -27,12 +27,6 @@ var (
 	configPath string
 )
 
-//Output file Config for the result
-const (
-	OutputRootDir  = "res"
-	OutputFileName = "labeld.csv"
-)
-
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.PersistentFlags().StringVarP(&configPath, "set", "s", "", "set config file")
@@ -40,7 +34,7 @@ func init() {
 
 func run(args []string) error {
 	if configPath == "" {
-		return errorUsage()
+		return runError()
 	}
 
 	b, err := ioutil.ReadFile(configPath)
@@ -53,32 +47,19 @@ func run(args []string) error {
 		return err
 	}
 
-	rFile, err := os.OpenFile(l.Path, os.O_RDONLY, os.ModePerm)
-	if err != nil {
-		return err
-	}
-
-	if err := os.Mkdir(OutputRootDir, os.ModePerm); err != nil {
-		return err
-	}
-
-	wFile, err := os.OpenFile(filepath.Join(OutputRootDir, OutputFileName), os.O_CREATE|os.O_WRONLY, os.ModePerm)
-	if err != nil {
-		rFile.Close()
+	if err := utils.Mkdir(gabel.DirForResult); err != nil {
 		return err
 	}
 
 	c := &gabel.Config{
 		LabelingInfo: l,
 		Stdin:        os.Stdin,
-		RFile:        rFile,
-		WFile:        wFile,
 	}
 
 	return c.Run()
 }
 
-func errorUsage() error {
+func runError() error {
 	return errors.New(`Error: config file does not exist
 Usage:
    gabel run <option>
