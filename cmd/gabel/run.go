@@ -49,13 +49,13 @@ func run(args []string) error {
 		return err
 	}
 
-	if err := helpers.Mkdir(gabel.DirForResult); err != nil {
-		return err
-	}
-
 	c := &gabel.Config{
 		LabelingInfo: l,
 		Stdin:        os.Stdin,
+	}
+
+	if err := helpers.Mkdir(gabel.DirForResult); err != nil {
+		return err
 	}
 
 	rF, err := helpers.OpenFile(c.Path, os.O_RDONLY)
