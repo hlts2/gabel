@@ -2,7 +2,6 @@ package gabel
 
 import (
 	"encoding/csv"
-	"fmt"
 	"io"
 )
 
@@ -29,8 +28,12 @@ func (c Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 		}
 
 		if len(records) > 0 {
-			fmt.Println(records)
+			labeling(i, records[0], writer)
 		}
 	}
 	return nil
+}
+
+func labeling(id int, text string, writer *csv.Writer) {
+
 }

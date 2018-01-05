@@ -43,7 +43,7 @@ func run(args []string) error {
 		return err
 	}
 
-	c := gabel.Config{
+	c := gabel.Gabel{
 		LabelingInfo: l,
 		Stdin:        os.Stdin,
 	}
