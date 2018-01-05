@@ -28,7 +28,9 @@ func (c *Config) Run(reader *csv.Reader, writer *csv.Writer) error {
 			return err
 		}
 
-		fmt.Println(records)
+		if len(records) > 0 {
+			fmt.Println(records)
+		}
 	}
 	return nil
 }
