@@ -14,3 +14,4 @@ build:
 
 clean:
 	rm -rf ./build
+	rm $(GOPATH)/bin/gabel
