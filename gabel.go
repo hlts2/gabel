@@ -12,7 +12,7 @@ type Gabel struct {
 }
 
 //Run labeling process
-func (c Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
+func (g Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 	for i := 0; ; i++ {
 		records, err := reader.Read()
 		if err == io.EOF {
@@ -22,12 +22,12 @@ func (c Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 		}
 
 		if len(records) > 0 {
-			labeling(i, records[0], writer)
+			g.labeling(i, records[0], writer)
 		}
 	}
 	return nil
 }
 
-func labeling(id int, text string, writer *csv.Writer) {
+func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
 
 }
