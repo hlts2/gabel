@@ -6,20 +6,20 @@ import (
 	"io"
 )
 
-//Config is gabel config structure
-type Config struct {
-	LabelingInfo
-	Stdin io.Reader
-}
-
 //Output file Config for the result
 const (
 	DirForResult   = "GabelResult"
 	OutputFileName = "labeld.csv"
 )
 
+//Gabel is gabel base struct
+type Gabel struct {
+	LabelingInfo
+	Stdin io.Reader
+}
+
 //Run labeling process
-func (c Config) Run(reader *csv.Reader, writer *csv.Writer) error {
+func (c Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 	for i := 0; ; i++ {
 		records, err := reader.Read()
 		if err == io.EOF {
