@@ -3,7 +3,7 @@ package gabel
 import (
 	"io/ioutil"
 
-	"gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v2"
 )
 
 //LabelingInfo is config.yaml Model

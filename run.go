@@ -20,7 +20,7 @@ const (
 
 //Run labeling process
 func (c Config) Run(reader *csv.Reader, writer *csv.Writer) error {
-	for {
+	for i := 0; ; i++ {
 		records, err := reader.Read()
 		if err == io.EOF {
 			break
