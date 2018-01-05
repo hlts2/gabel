@@ -2,7 +2,7 @@ package helpers
 
 import "os"
 
-//Mkdir generate directory of given path
+//Mkdir generates directory of given path
 func Mkdir(path string) error {
 	if ok := isExist(path); ok {
 		return nil
@@ -10,7 +10,7 @@ func Mkdir(path string) error {
 	return os.Mkdir(path, os.ModePerm)
 }
 
-//CreateFile generate file of given path
+//CreateFile generates file of given path
 func CreateFile(name string, flag int) (*os.File, error) {
 	if ok := isExist(name); ok {
 		file, err := OpenFile(name, os.O_CREATE|flag)
