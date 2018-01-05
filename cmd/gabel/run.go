@@ -4,14 +4,12 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/hlts2/gabel"
 	"github.com/hlts2/gabel/helpers"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v2"
 )
 
 var runCmd = &cobra.Command{
@@ -39,13 +37,9 @@ func run(args []string) error {
 		return runError()
 	}
 
-	b, err := ioutil.ReadFile(configPath)
-	if err != nil {
-		return err
-	}
-
 	var l gabel.LabelingInfo
-	if err = yaml.Unmarshal(b, &l); err != nil {
+	err := gabel.LoadLabelingInfoWithGivenConfigPath(configPath, &l)
+	if err != nil {
 		return err
 	}
 
