@@ -27,6 +27,12 @@ var (
 	configPath string
 )
 
+//Output file Config for the result
+const (
+	DirForResult   = "GabelResult"
+	OutputFileName = "labeld.csv"
+)
+
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.PersistentFlags().StringVarP(&configPath, "set", "s", "", "set config file")
@@ -48,7 +54,7 @@ func run(args []string) error {
 		Stdin:        os.Stdin,
 	}
 
-	if err := helpers.Mkdir(gabel.DirForResult); err != nil {
+	if err := helpers.Mkdir(DirForResult); err != nil {
 		return err
 	}
 
@@ -57,7 +63,7 @@ func run(args []string) error {
 		return err
 	}
 
-	name := filepath.Join(gabel.DirForResult, gabel.OutputFileName)
+	name := filepath.Join(DirForResult, OutputFileName)
 	wF, err := helpers.CreateFile(name, os.O_WRONLY)
 	if err != nil {
 		rF.Close()

@@ -5,12 +5,6 @@ import (
 	"io"
 )
 
-//Output file Config for the result
-const (
-	DirForResult   = "GabelResult"
-	OutputFileName = "labeld.csv"
-)
-
 //Gabel is gabel base struct
 type Gabel struct {
 	LabelingInfo
