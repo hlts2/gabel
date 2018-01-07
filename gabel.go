@@ -31,7 +31,7 @@ type (
 )
 
 //NewGabelio returns Gabelio instance
-func NewGabelio(yamlPath string) (*Gabelio, error) {
+func NewGabelio(csvPath string) (*Gabelio, error) {
 	if err := helpers.Mkdir(DirForResult); err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func NewGabelio(yamlPath string) (*Gabelio, error) {
 		return nil, err
 	}
 
-	rf, err := helpers.OpenFile(yamlPath, os.O_RDONLY)
+	rf, err := helpers.OpenFile(csvPath, os.O_RDONLY)
 	if err != nil {
 		wf.Close()
 		return nil, err
