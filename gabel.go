@@ -15,17 +15,20 @@ const (
 	OutputFileName = "labeld.csv"
 )
 
-//Gabel is gabel base struct
-type Gabel struct {
-	LabelingInfo
-	*Gabelio
-}
+type (
 
-//Gabelio is gabel io base struct
-type Gabelio struct {
-	Stdin        io.Reader
-	WFile, RFile *os.File
-}
+	//Gabel is gabel base struct
+	Gabel struct {
+		LabelingInfo
+		*Gabelio
+	}
+
+	//Gabelio is gabel io base struct
+	Gabelio struct {
+		Stdin        io.Reader
+		WFile, RFile *os.File
+	}
+)
 
 //NewGabelio returns Gabelio instance
 func NewGabelio(yamlPath string) (*Gabelio, error) {
