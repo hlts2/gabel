@@ -64,7 +64,7 @@ func run(args []string) error {
 	}
 
 	name := filepath.Join(DirForResult, OutputFileName)
-	wF, err := helpers.CreateFile(name, os.O_WRONLY)
+	wF, err := helpers.CreateFile(name, os.O_RDWR)
 	if err != nil {
 		rF.Close()
 		return err
