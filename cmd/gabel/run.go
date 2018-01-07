@@ -49,6 +49,11 @@ func run(args []string) error {
 		return err
 	}
 
+	g := gabel.Gabel{
+		LabelingInfo: l,
+		Stdin:        os.Stdin,
+	}
+
 	rf, err := helpers.OpenFile(l.Path, os.O_RDONLY)
 	if err != nil {
 		return err
@@ -67,11 +72,6 @@ func run(args []string) error {
 	writer := csv.NewWriter(wf)
 	reader := csv.NewReader(rf)
 	reader.LazyQuotes = true
-
-	g := gabel.Gabel{
-		LabelingInfo: l,
-		Stdin:        os.Stdin,
-	}
 
 	return g.Run(reader, writer)
 }
