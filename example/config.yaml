@@ -1,4 +1,4 @@
-path: origin.csv
+path: example.csv
 labels:
     - name: fail
     - values:
