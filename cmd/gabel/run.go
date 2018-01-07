@@ -5,8 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/hlts2/gabel"
+	"github.com/hlts2/gabel/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -25,6 +27,12 @@ var (
 	configPath string
 )
 
+//Output file Config for the result
+const (
+	DirForResult   = "GabelResult"
+	OutputFileName = "labeld.csv"
+)
+
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.PersistentFlags().StringVarP(&configPath, "set", "s", "", "set config file")
@@ -41,23 +49,29 @@ func run(args []string) error {
 		return err
 	}
 
-	gio, err := gabel.NewGabelio(l.Path)
+	rf, err := helpers.OpenFile(l.Path, os.O_RDONLY)
 	if err != nil {
 		return err
 	}
 
-	defer func() {
-		gio.FilesClose()
-	}()
+	if err := helpers.Mkdir(DirForResult); err != nil {
+		return err
+	}
+
+	name := filepath.Join(DirForResult, OutputFileName)
+	wf, err := helpers.CreateFile(name, os.O_RDWR)
+	if err != nil {
+		return err
+	}
+
+	writer := csv.NewWriter(wf)
+	reader := csv.NewReader(rf)
+	reader.LazyQuotes = true
 
 	g := gabel.Gabel{
 		LabelingInfo: l,
-		Gabelio:      gio,
+		Stdin:        os.Stdin,
 	}
-
-	writer := csv.NewWriter(g.WFile)
-	reader := csv.NewReader(g.RFile)
-	reader.LazyQuotes = true
 
 	return g.Run(reader, writer)
 }
