@@ -40,7 +40,7 @@ func init() {
 
 func run(args []string) error {
 	if configPath == "" {
-		return runError()
+		return errors.New(runErrorMessageOfConfigFileDoesNotExist())
 	}
 
 	var l gabel.LabelingInfo
@@ -76,13 +76,13 @@ func run(args []string) error {
 	return g.Run(reader, writer)
 }
 
-func runError() error {
-	return errors.New(`Error: config file does not exist
+func runErrorMessageOfConfigFileDoesNotExist() string {
+	return `Error: config file does not exist
 Usage:
    gabel run <option>
 
 Available Options:
    -s, --set   Set config file path for gabel
                $ gabel run -s config.yaml
-	`)
+	`
 }
