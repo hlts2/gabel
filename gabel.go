@@ -32,5 +32,4 @@ func (g Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 }
 
 func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
-
 }
