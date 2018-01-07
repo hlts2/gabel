@@ -1,11 +1,30 @@
 package gabel
 
 /*
-labelingMessageTmpl returns the colored message to be displayed
+baseLabelingMessageTmpl is the colored base labeling message to be displayed
+
+ex)
+ 「text(colored)」
+Please Input Label {exist == [1]} or {not exist == [0]}
+*/
+var baseLabelingMessageTmpl = "\x1b[33m 「%s」\x1b[0m\nPlease input label. \x1b[4m{%s == %v}\x1b[0m or \x1b[4m{%s == %v}\x1b[0m or \x1b[4m{Modify == mod}\x1b[0m "
+
+/*
+labelingMessageTmpl is the colored message to be displayed
 
 ex)
 1
- 「csv text」
-Please Input Your Label {exist == [1]} or {not exist == [0]} or {Modify == mod}%
+ 「text(colored)」
+Please Input Label {exist == [1]} or {not exist == [0]} or {Modify == mod}
 */
-var labelingMessageTmpl = "\n%d\n\x1b[33m 「%s」\x1b[0m\nPlease input label. \x1b[4m{%s == %v}\x1b[0m or \x1b[4m{%s == %v}\x1b[0m or \x1b[4m{Modify == mod}\x1b[0m"
+var labelingMessageTmpl = "\n%d\n" + baseLabelingMessageTmpl + "or \x1b[4m{Modify == mod}\x1b[0m"
+
+/*
+modfityLabelingMessageTmp is the colored modify labeling message to be displayed
+
+ex)
+1(colored)
+ 「csv text(colored)」
+Please Input Label {exist == [1]} or {not exist == [0]}
+*/
+var modfityLabelingMessageTmp = "\n\x1b[41m%d\x1b[0m\n" + baseLabelingMessageTmpl
