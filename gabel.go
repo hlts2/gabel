@@ -64,10 +64,7 @@ func (g *Gabelio) FilesClose() {
 }
 
 //Run labeling process
-func (g Gabel) Run() error {
-	writer := csv.NewWriter(g.WFile)
-	reader := csv.NewReader(g.RFile)
-	reader.LazyQuotes = true
+func (g Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 
 	for i := 0; ; i++ {
 		records, err := reader.Read()

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"errors"
 	"fmt"
 	"os"
@@ -54,7 +55,11 @@ func run(args []string) error {
 		Gabelio:      gio,
 	}
 
-	return g.Run()
+	writer := csv.NewWriter(g.WFile)
+	reader := csv.NewReader(g.RFile)
+	reader.LazyQuotes = true
+
+	return g.Run(reader, writer)
 }
 
 func runError() error {
