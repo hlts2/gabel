@@ -40,4 +40,10 @@ func (g Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 
 func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
 	fmt.Printf(labelingMessageTmpl(g.Labels), id, text)
+	for {
+		in := g.StdIn.ReadLine()
+		if in == "mod" {
+			//TODO modify past label
+		}
+	}
 }
