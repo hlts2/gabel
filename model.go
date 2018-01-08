@@ -8,9 +8,12 @@ import (
 
 //LabelingInfo is config.yaml Model
 type LabelingInfo struct {
-	Path   string  `yaml:"path"`   //The file to which you want to label
-	Labels []Label `yaml:"labels"` //Details of Labeling
+	Path   string          `yaml:"path"` //The file to which you want to label
+	Labels `yaml:"labels"` //Details of Labeling
 }
+
+//Labels is Label slice
+type Labels []Label
 
 //Label is detail of labeling
 type Label struct {
@@ -30,4 +33,13 @@ func LoadLabelingInfoWithGivenConfigPath(path string, l *LabelingInfo) error {
 	}
 
 	return nil
+}
+
+//GetValues returns Labels Value
+func (labels Labels) GetValues() []int {
+	s := make([]int, 0)
+	for _, label := range labels {
+		s = append(s, label.Value)
+	}
+	return s
 }
