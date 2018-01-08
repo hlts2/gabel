@@ -39,11 +39,11 @@ ex)
 {message == [values]} or {message == [values]} or ....
 */
 func availableChoicesMessage(labels []Label) string {
-	tmpl := "\x1b[4m{%s\x1b[0m == %v} "
+	tmpl := "\x1b[4m{%s\x1b[0m == %d} "
 
 	var msg string
 	for _, label := range labels {
-		msg += fmt.Sprintf(tmpl, label.Name, label.Values) + "or "
+		msg += fmt.Sprintf(tmpl, label.Name, label.Value) + "or "
 	}
 
 	return msg[:len(msg)-3]

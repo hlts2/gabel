@@ -14,8 +14,8 @@ type LabelingInfo struct {
 
 //Label is detail of labeling
 type Label struct {
-	Name   string `yaml:"name"`
-	Values []int  `yaml:"values"`
+	Name  string `yaml:"name"`
+	Value int    `yaml:"value"`
 }
 
 //LoadLabelingInfoWithGivenConfigPath is load config file of given path
