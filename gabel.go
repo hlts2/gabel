@@ -51,7 +51,8 @@ func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
 		sp, err := helpers.StringToIntSlice(in, ",")
 		if err == nil {
 			if helpers.IsContainsAllElement(g.Labels.GetValues(), sp) {
-				//TODO writer csv file
+				writer.Write([]string{text, in})
+				writer.Flush()
 				break
 			}
 		}
