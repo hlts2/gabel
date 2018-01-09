@@ -43,3 +43,12 @@ func (labels Labels) GetValues() []int {
 	}
 	return s
 }
+
+//GetNames return Labels Name
+func (labels Labels) GetNames() []string {
+	s := make([]string, 0)
+	for _, label := range labels {
+		s = append(s, label.Name)
+	}
+	return s
+}
