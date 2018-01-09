@@ -11,10 +11,8 @@ func IsContainsAllElement(ns []int, targets []int) bool {
 	t := make([]int, 0)
 
 	for _, target := range targets {
-		for _, n := range nsTmp {
-			if n == target {
-				t = append(t, n)
-			}
+		if IsContains(target, nsTmp) {
+			t = append(t, target)
 		}
 	}
 	return len(t) == len(targets)
