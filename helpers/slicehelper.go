@@ -6,17 +6,40 @@ import (
 )
 
 //IsContainsAllElement checks whether it contains all elements of targets
-func IsContainsAllElement(slice []int, targets []int) bool {
+func IsContainsAllElement(ns []int, targets []int) bool {
+	nsTmp := ExcluDuplicatesElementOfSlice(ns)
 	t := make([]int, 0)
 
 	for _, target := range targets {
-		for _, v := range slice {
-			if v == target {
-				t = append(t, v)
+		for _, n := range nsTmp {
+			if n == target {
+				t = append(t, n)
 			}
 		}
 	}
 	return len(t) == len(targets)
+}
+
+//ExcluDuplicatesElementOfSlice returns slice without duplicate elements
+func ExcluDuplicatesElementOfSlice(ns []int) []int {
+	t := make([]int, 0)
+
+	for _, n := range ns {
+		if !IsContains(n, t) {
+			t = append(t, n)
+		}
+	}
+	return t
+}
+
+//IsContains check if n is included in the slice
+func IsContains(n int, ns []int) bool {
+	for _, v := range ns {
+		if n == v {
+			return true
+		}
+	}
+	return false
 }
 
 //StringToIntSlice convert from string to int slice
