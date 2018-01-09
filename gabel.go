@@ -47,6 +47,7 @@ func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
 		if in == "mod" {
 			//TODO modify past label
 			fmt.Printf(labelingMessageTmpl(g.Labels), id, text)
+			continue
 		}
 
 		sp, err := helpers.StringToIntSlice(in, ",")
