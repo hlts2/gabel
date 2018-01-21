@@ -18,7 +18,7 @@ ex)
 Please enter label {exist == [1]} or {not exist == [0]} or {Modify == mod}:
 */
 func messageTmpl(id int, text string, labels []Label) string {
-	return fmt.Sprintf("\n%d\n"+baseMessageTmpl+availableChoicesMessage(labels)+"or \x1b[4m{Modify == mod}\x1b[0m:", id, text)
+	return fmt.Sprintf("\n%d\n"+baseMessageTmpl+generateAvailableChoicesMessage(labels)+"or \x1b[4m{Modify == mod}\x1b[0m:", id, text)
 }
 
 /*
@@ -30,15 +30,15 @@ Please enter Label {exist == [1]} or {not exist == [0]}:
 */
 
 func modifyMessageTmpl(id int, text string, labels []Label) string {
-	return fmt.Sprintf("\nx1b[41m%d\x1b[0m\n"+baseMessageTmpl+availableChoicesMessage(labels)+":", id, text)
+	return fmt.Sprintf("\nx1b[41m%d\x1b[0m\n"+baseMessageTmpl+generateAvailableChoicesMessage(labels)+":", id, text)
 }
 
 /*
-availableChoicesMessage create available choices
+generateAvailableChoicesMessage create available choices
 ex)
 {message == [values]} or {message == [values]} or ....
 */
-func availableChoicesMessage(labels []Label) string {
+func generateAvailableChoicesMessage(labels []Label) string {
 	tmpl := "\x1b[4m{%s\x1b[0m == %d} "
 
 	var msg string
