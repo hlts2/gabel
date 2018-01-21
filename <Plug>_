@@ -40,12 +40,25 @@ func (g Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 	return nil
 }
 
+//labelingMessageTmpl
+//modifyLabelingMessageTmpl
+
+//Message is message interface
+type Message interface {
+	LabelingMessage(id int, text string, labels Labels)
+}
+
+//ModifyMessage ...
+type ModifyMessage struct{}
+
+type MainMessage struct {}
+
 func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
-	fmt.Print(messageTmpl(id, text, g.Labels))
+	fmt.Printf(labelingMessageTmpl(g.Labels), id, text)
 	for {
 		in := g.StdIn.ReadLine()
 		if in == "mod" {
-			fmt.Print(modifyMessageTmpl(id, text, g.Labels))
+			fmt.Printf(modifyLabelingMessageTmpl(g.Labels), id, text)
 			continue
 		}
 

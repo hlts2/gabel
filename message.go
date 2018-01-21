@@ -3,22 +3,22 @@ package gabel
 import "fmt"
 
 /*
-baseLabelingMessageTmpl is the colored base message to be displayed for labeling
+baseMessageTmpl is the colored base message to be displayed for labeling
 ex)
  「text(colored)」
-Please Input Label.
+Please enter label.
 */
-var baseLabelingMessageTmpl = "\x1b[33m 「%s」\x1b[0m\nPlease input label. "
+var baseMessageTmpl = "\x1b[33m 「%s」\x1b[0m\nPlease enter label. "
 
 /*
-labelingMessageTmpl returns the colored message to be displayed for labeling
+messageTmpl returns the colored message to be displayed for labeling
 ex)
 1
  「text(colored)」
-Please Input Label {exist == [1]} or {not exist == [0]} or {Modify == mod}:
+Please enter label {exist == [1]} or {not exist == [0]} or {Modify == mod}:
 */
-func labelingMessageTmpl(labels []Label) string {
-	return "\n%d\n" + baseLabelingMessageTmpl + availableChoicesMessage(labels) + "or \x1b[4m{Modify == mod}\x1b[0m:"
+func messageTmpl(id int, text string, labels []Label) string {
+	return fmt.Sprintf("\n%d\n"+baseMessageTmpl+availableChoicesMessage(labels)+"or \x1b[4m{Modify == mod}\x1b[0m:", id, text)
 }
 
 /*
@@ -26,11 +26,11 @@ modfityLabelingMessageTmp returns the colored modify message to be displayed for
 ex)
 1(colored)
  「csv text(colored)」
-Please Input Label {exist == [1]} or {not exist == [0]}:
+Please enter Label {exist == [1]} or {not exist == [0]}:
 */
 
-func modifyLabelingMessageTmpl(labels []Label) string {
-	return "\nx1b[41m%d\x1b[0m\n" + baseLabelingMessageTmpl + availableChoicesMessage(labels) + ":"
+func modifyMessageTmpl(id int, text string, labels []Label) string {
+	return fmt.Sprintf("\nx1b[41m%d\x1b[0m\n"+baseMessageTmpl+availableChoicesMessage(labels)+":", id, text)
 }
 
 /*
