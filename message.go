@@ -29,7 +29,7 @@ ex)
 Please Input Label {exist == [1]} or {not exist == [0]}:
 */
 
-func modifityLabelingMessageTmpl(labels []Label) string {
+func modifyLabelingMessageTmpl(labels []Label) string {
 	return "\nx1b[41m%d\x1b[0m\n" + baseLabelingMessageTmpl + availableChoicesMessage(labels) + ":"
 }
 

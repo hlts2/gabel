@@ -45,8 +45,7 @@ func (g Gabel) labeling(id int, text string, writer *csv.Writer) {
 	for {
 		in := g.StdIn.ReadLine()
 		if in == "mod" {
-			//TODO modify past label
-			fmt.Printf(labelingMessageTmpl(g.Labels), id, text)
+			fmt.Printf(modifyLabelingMessageTmpl(g.Labels), id, text)
 			continue
 		}
 
