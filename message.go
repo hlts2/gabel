@@ -1,6 +1,9 @@
 package gabel
 
-import "fmt"
+import (
+	"fmt"
+	"unsafe"
+)
 
 /*
 baseMessageTmpl is the colored base message to be displayed for labeling
@@ -28,7 +31,6 @@ ex)
  「csv text(colored)」
 Please enter Label {exist == [1]} or {not exist == [0]}:
 */
-
 func modifyMessageTmpl(id int, text string, labels []Label) string {
 	return fmt.Sprintf("\nx1b[41m%d\x1b[0m\n"+baseMessageTmpl+generateAvailableChoicesMessage(labels)+":", id, text)
 }
@@ -41,13 +43,13 @@ ex)
 func generateAvailableChoicesMessage(labels []Label) string {
 	tmpl := "\x1b[4m{%s\x1b[0m == %d} "
 
-	var msg string
+	var msg []byte
 	for i, label := range labels {
-		msg += fmt.Sprintf(tmpl, label.Name, label.Value)
+		msg = append(msg, fmt.Sprintf(tmpl, label.Name, label.Value)...)
 		if i < len(labels)-1 {
-			msg += "or "
+			msg = append(msg, "or "...)
 		}
 	}
 
-	return msg
+	return *(*string)(unsafe.Pointer(&msg))
 }
