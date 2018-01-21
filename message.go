@@ -42,9 +42,12 @@ func generateAvailableChoicesMessage(labels []Label) string {
 	tmpl := "\x1b[4m{%s\x1b[0m == %d} "
 
 	var msg string
-	for _, label := range labels {
-		msg += fmt.Sprintf(tmpl, label.Name, label.Value) + "or "
+	for i, label := range labels {
+		msg += fmt.Sprintf(tmpl, label.Name, label.Value)
+		if i < len(labels)-1 {
+			msg += "or "
+		}
 	}
 
-	return msg[:len(msg)-3]
+	return msg
 }
