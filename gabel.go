@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/hlts2/gabel/helpers"
 )
@@ -46,11 +47,18 @@ again:
 	for {
 		in := g.StdIn.ReadLine()
 		if in == "mod" {
-			g.modifyOfLabeling(id, writer)
-			goto again
+			for {
+				//enter past labeling ID
+				n, err := strconv.Atoi(g.StdIn.ReadLine())
+				if err == nil && (0 < n && n < id) {
+					g.modifyOfLabeling(n, writer)
+					goto again
+				}
+				fmt.Print("Please re-enter:")
+			}
 		}
 
-		//Convert comma-separated string to int slice
+		//convert comma-separated string to int slice
 		//"1, 2, 3" => []int{1, 2, 3}
 		isl, err := helpers.StringToIntSlice(in, ",")
 		if err == nil {
@@ -64,5 +72,5 @@ again:
 	}
 }
 
-func (g Gabel) modifyOfLabeling(maxID int, writer *csv.Writer) {
+func (g Gabel) modifyOfLabeling(id int, writer *csv.Writer) {
 }
