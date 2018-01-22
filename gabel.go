@@ -23,7 +23,7 @@ type (
 	}
 )
 
-//Run labeling process
+//Run execute labeling process
 func (g Gabel) Run(reader *csv.Reader, writer *csv.Writer) error {
 	for i := 0; ; i++ {
 		records, err := reader.Read()
@@ -46,17 +46,15 @@ again:
 	for {
 		in := g.StdIn.ReadLine()
 		if in == "mod" {
-			fmt.Print(modifyMessageTmpl(id, text, g.Labels))
-
-			//TODO modify past label
+			g.modifyOfLabeling(id, writer)
 			goto again
 		}
 
 		//Convert comma-separated string to int slice
 		//"1, 2, 3" => []int{1, 2, 3}
-		isp, err := helpers.StringToIntSlice(in, ",")
+		isl, err := helpers.StringToIntSlice(in, ",")
 		if err == nil {
-			if helpers.IsContainsAllElement(g.Labels.GetValues(), isp) {
+			if helpers.IsContainsAllElement(g.Labels.GetValues(), isl) {
 				writer.Write([]string{text, in})
 				writer.Flush()
 				break
@@ -64,4 +62,7 @@ again:
 		}
 		fmt.Print("Please re-enter:")
 	}
+}
+
+func (g Gabel) modifyOfLabeling(maxID int, writer *csv.Writer) {
 }
