@@ -14,7 +14,6 @@ func Mkdir(path string) error {
 func CreateFile(name string, flag int) (*os.File, error) {
 	if ok := isExist(name); ok {
 		file, err := OpenFile(name, os.O_CREATE|flag)
-		file.Truncate(0)
 		return file, err
 	}
 

@@ -51,7 +51,7 @@ again:
 				//enter past labeling ID
 				n, err := strconv.Atoi(g.StdIn.ReadLine())
 				if err == nil && (0 < n && n < id) {
-					g.modifyOfLabeling(n, writer)
+					g.modifyOfLabeling(n)
 					goto again
 				}
 				fmt.Print("Please re-enter:")
@@ -71,5 +71,6 @@ again:
 	}
 }
 
-func (g Gabel) modifyOfLabeling(id int, writer *csv.Writer) {
+func (g Gabel) modifyOfLabeling(id int) {
+
 }
