@@ -60,6 +60,7 @@ again:
 
 		//convert comma-separated string to int slice
 		//"1, 2, 3" => []int{1, 2, 3}
+		//"1"       => []int{1}
 		isl, err := helpers.StringToIntSlice(in, ",")
 		if err == nil {
 			if helpers.IsContainsAllElement(g.Labels.GetValues(), isl) {
