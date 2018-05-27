@@ -21,9 +21,9 @@ Usage:
 
 Flags:
    -h, --help  Help for Run Command
-               $ gabel run --help
-   -s, --set   Set config file path for gabel
-               $ gabel run -s config.yaml
+               $ gabel --help
+   -s, --set   Set config file path
+               $ gabel -s config.yaml
 	`
 
 // Execute executes the CLI application
