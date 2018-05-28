@@ -8,18 +8,18 @@ import (
 
 // Config is CLI config object
 type Config struct {
-	Target string `yaml:"target"`
-	Labels Labels `yaml:"labels"`
+	Path   string `yaml:"path"`
+	Tables Tables `yaml:"tables"`
 }
 
-// Label is teacher label object
-type Label struct {
+// Table is correspondence table of label
+type Table struct {
 	Name   string   `yaml:"name"`
-	Values []string `yaml:"values"`
+	Labels []string `yaml:"labels"`
 }
 
-// Labels is Label slice
-type Labels []Label
+// Tables is Table slice
+type Tables []Table
 
 // LoadConfig loads Config object from given the path
 func LoadConfig(config *Config, path string) error {
@@ -35,4 +35,9 @@ func LoadConfig(config *Config, path string) error {
 	}
 
 	return nil
+}
+
+// ValidateLabels validates labels
+func (c *Config) ValidateLabels(labels []string) bool {
+	return false
 }

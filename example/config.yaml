@@ -1,9 +1,9 @@
-target: example.csv
-labels:
+path: example.csv
+tables:
  - name: "fail"
-   values:
+   labels:
     - "0"
 
  - name: "success"
-   values:
+   labels:
     - "1"

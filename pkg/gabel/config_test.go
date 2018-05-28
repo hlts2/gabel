@@ -16,15 +16,15 @@ func TestLoadConfig(t *testing.T) {
 	}
 
 	expected := Config{
-		Target: "example.csv",
-		Labels: Labels{
+		Path: "example.csv",
+		Tables: Tables{
 			{
 				Name:   "fail",
-				Values: []string{"0"},
+				Labels: []string{"0"},
 			},
 			{
 				Name:   "success",
-				Values: []string{"1"},
+				Labels: []string{"1"},
 			},
 		},
 	}
