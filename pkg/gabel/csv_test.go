@@ -7,6 +7,16 @@ import (
 )
 
 func TestNewCSV(t *testing.T) {
+	path := "../../example/example.csv"
+
+	c, err := NewCSV(path)
+	if err != nil {
+		t.Errorf("NewCSV is error: %v", err)
+	}
+
+	if c == nil {
+		t.Errorf("NewCSV c is nil")
+	}
 }
 
 func TestGetRecordCount(t *testing.T) {
