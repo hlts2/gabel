@@ -1,9 +1,7 @@
 path: example.csv
 tables:
  - name: "fail"
-   labels:
-    - "0"
+   label: "0"
 
  - name: "success"
-   labels:
-    - "1"
+   label: "1"

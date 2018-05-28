@@ -14,8 +14,8 @@ type Config struct {
 
 // Table is correspondence table of label
 type Table struct {
-	Name   string   `yaml:"name"`
-	Labels []string `yaml:"labels"`
+	Name  string `yaml:"name"`
+	Label string `yaml:"label"`
 }
 
 // Tables is Table slice
@@ -39,29 +39,17 @@ func LoadConfig(config *Config, path string) error {
 
 // ValidateLabels validates labels
 func (c *Config) ValidateLabels(labels []string) bool {
-	cnt := 0
-	for _, table := range c.Tables {
-		cnt += len(table.Labels)
-	}
-
-	merged := make([]string, 0, cnt)
-
-	for _, table := range c.Tables {
-		merged = append(merged, table.Labels...)
-	}
-
 	for _, lv := range labels {
 		exist := false
-		for _, mv := range merged {
-			if lv == mv {
+		for _, table := range c.Tables {
+			if lv == table.Label {
 				exist = true
 			}
-
 		}
+
 		if !exist {
 			return false
 		}
 	}
-
 	return true
 }

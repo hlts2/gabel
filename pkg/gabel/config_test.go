@@ -19,12 +19,12 @@ func TestLoadConfig(t *testing.T) {
 		Path: "example.csv",
 		Tables: Tables{
 			{
-				Name:   "fail",
-				Labels: []string{"0"},
+				Name:  "fail",
+				Label: "0",
 			},
 			{
-				Name:   "success",
-				Labels: []string{"1"},
+				Name:  "success",
+				Label: "1",
 			},
 		},
 	}
@@ -46,12 +46,12 @@ func TestValidateLabels(t *testing.T) {
 			config: &Config{
 				Tables: Tables{
 					{
-						Name:   "dog",
-						Labels: []string{"1"},
+						Name:  "dog",
+						Label: "1",
 					},
 					{
-						Name:   "cat",
-						Labels: []string{"2"},
+						Name:  "cat",
+						Label: "2",
 					},
 				},
 			},
