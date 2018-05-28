@@ -39,5 +39,29 @@ func LoadConfig(config *Config, path string) error {
 
 // ValidateLabels validates labels
 func (c *Config) ValidateLabels(labels []string) bool {
-	return false
+	cnt := 0
+	for _, table := range c.Tables {
+		cnt += len(table.Labels)
+	}
+
+	merged := make([]string, 0, cnt)
+
+	for _, table := range c.Tables {
+		merged = append(merged, table.Labels...)
+	}
+
+	for _, lv := range labels {
+		exist := false
+		for _, mv := range merged {
+			if lv == mv {
+				exist = true
+			}
+
+		}
+		if !exist {
+			return false
+		}
+	}
+
+	return true
 }

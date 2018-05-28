@@ -33,3 +33,36 @@ func TestLoadConfig(t *testing.T) {
 		t.Errorf("LoadConfig config expected: %v, got: %v", expected, config)
 	}
 }
+
+func TestValidateLabels(t *testing.T) {
+	tests := []struct {
+		expected bool
+		labels   []string
+		config   *Config
+	}{
+		{
+			expected: true,
+			labels:   []string{"1"},
+			config: &Config{
+				Tables: Tables{
+					{
+						Name:   "dog",
+						Labels: []string{"1"},
+					},
+					{
+						Name:   "cat",
+						Labels: []string{"2"},
+					},
+				},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		got := test.config.ValidateLabels(test.labels)
+
+		if test.expected != got {
+			t.Errorf("ValidateLabels expected: %v, got: %v", test.expected, got)
+		}
+	}
+}
