@@ -12,13 +12,23 @@ var rootCmd = &cobra.Command{
 	Use:   "gabel",
 	Short: "gabel is a CLI tool for creating teacher data",
 	RunE: func(cmd *cobra.Command, args []string) error {
+		var config *gabel.Config
 
-		_, err := gabel.NewCSV(configPath)
+		err := gabel.LoadConfig(config, configPath)
 		if err != nil {
 			return err
 		}
 
-		return nil
+		csv, err := gabel.NewCSV(configPath)
+		if err != nil {
+			return err
+		}
+
+		g := gabel.NewGabel(config, csv, func() string {
+			return ""
+		})
+
+		return g.Run()
 	},
 }
 
