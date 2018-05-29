@@ -66,3 +66,66 @@ func TestValidateLabels(t *testing.T) {
 		}
 	}
 }
+
+func TestStringTables(t *testing.T) {
+	tests := []struct {
+		expected string
+		config   *Config
+	}{
+		{
+			expected: "dog: 1\ncat: 2",
+			config: &Config{
+				Tables: Tables{
+					{
+						Name:  "dog",
+						Label: "1",
+					},
+					{
+						Name:  "cat",
+						Label: "2",
+					},
+				},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		got := test.config.StringTables()
+
+		if test.expected != got {
+			t.Errorf("StringTables expected: %v, got: %v", test.expected, got)
+		}
+	}
+}
+
+func TestTableFieldSize(t *testing.T) {
+	tests := []struct {
+		expected int
+		config   *Config
+	}{
+		{
+			expected: 8,
+			config: &Config{
+				Tables: Tables{
+					{
+						Name:  "dog",
+						Label: "1",
+					},
+					{
+						Name:  "cat",
+						Label: "2",
+					},
+				},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		got := test.config.TablesFiledSize()
+
+		if test.expected != got {
+			t.Errorf("TablesFiledSize expected: %v, got: %v", test.expected, got)
+		}
+	}
+
+}

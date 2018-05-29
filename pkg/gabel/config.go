@@ -2,6 +2,7 @@ package gabel
 
 import (
 	"os"
+	"unsafe"
 
 	"gopkg.in/yaml.v2"
 )
@@ -54,12 +55,26 @@ func (c *Config) ValidateLabels(labels []string) bool {
 	return true
 }
 
-// StringTables returns string tables. The return value format is "key: value"
+// StringTables returns string tables. The return value format is "key: value\nkey: value"
 func (c *Config) StringTables() string {
-	var out string
+	out := make([]byte, 0, c.TablesFiledSize()+(3*len(c.Tables)))
+
 	for _, table := range c.Tables {
-		out += table.Name + ": " + table.Label + "\n"
+		out = append(out, table.Name...)
+		out = append(out, ": "...)
+		out = append(out, table.Label...)
+		out = append(out, "\n"...)
 	}
 
-	return out
+	out = out[:len(out)-1]
+	return *(*string)(unsafe.Pointer(&out))
+}
+
+// TablesFiledSize returns field size of all tables
+func (c *Config) TablesFiledSize() (cnt int) {
+	for _, table := range c.Tables {
+		cnt += len(table.Name) + len(table.Label)
+	}
+
+	return cnt
 }
