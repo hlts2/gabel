@@ -28,6 +28,7 @@ func NewGabel(config *Config, csv *CSV, templator Templator) *Gabel {
 // Run starts labeling
 func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 	scanner := bufio.NewScanner(in)
+	writer := bufio.NewWriter(out)
 
 	stringTables := g.config.StringTables()
 
@@ -35,14 +36,16 @@ func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 	Back:
 
 		// TODO output record
-		io.WriteString(out, "")
-		io.WriteString(out, stringTables)
-		io.WriteString(out, ">>> ")
+		writer.WriteString("")
+		writer.WriteString(stringTables)
+		writer.WriteString(">>> ")
+		writer.Flush()
 
 		labels := strings.Split(",", scanner.Text())
 
 		if !g.config.ValidateLabels(labels) {
-			io.WriteString(out, "Invalid label")
+			writer.WriteString("Invlid label")
+			writer.Flush()
 			goto Back
 		}
 
