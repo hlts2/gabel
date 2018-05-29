@@ -87,13 +87,19 @@ func TestStringTables(t *testing.T) {
 				},
 			},
 		},
+		{
+			expected: "",
+			config: &Config{
+				Tables: Tables{},
+			},
+		},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		got := test.config.StringTables()
 
 		if test.expected != got {
-			t.Errorf("StringTables expected: %v, got: %v", test.expected, got)
+			t.Errorf("i = %d StringTables expected: %v, got: %v", i, test.expected, got)
 		}
 	}
 }

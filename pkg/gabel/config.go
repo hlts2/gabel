@@ -57,6 +57,10 @@ func (c *Config) ValidateLabels(labels []string) bool {
 
 // StringTables returns string tables. The return value format is "key: value\nkey: value"
 func (c *Config) StringTables() string {
+	if len(c.Tables) == 0 {
+		return ""
+	}
+
 	out := make([]byte, 0, c.TablesFiledSize()+(3*len(c.Tables)))
 
 	for _, table := range c.Tables {
