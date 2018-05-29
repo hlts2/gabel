@@ -8,31 +8,34 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var configPath string
+
 var rootCmd = &cobra.Command{
 	Use:   "gabel",
 	Short: "gabel is a CLI tool for creating teacher data",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		var config *gabel.Config
-
-		err := gabel.LoadConfig(config, configPath)
-		if err != nil {
-			return err
-		}
-
-		csv, err := gabel.NewCSV(configPath)
-		if err != nil {
-			return err
-		}
-
-		g := gabel.NewGabel(config, csv, func() string {
-			return ""
-		})
-
-		return g.Run(os.Stdin, os.Stdout)
-	},
+	RunE:  Run,
 }
 
-var configPath string
+// Run executes gabel command
+func Run(cmd *cobra.Command, args []string) error {
+	var config *gabel.Config
+
+	err := gabel.LoadConfig(config, configPath)
+	if err != nil {
+		return err
+	}
+
+	csv, err := gabel.NewCSV(configPath)
+	if err != nil {
+		return err
+	}
+
+	g := gabel.NewGabel(config, csv, func() string {
+		return ""
+	})
+
+	return g.Run(os.Stdin, os.Stdout)
+}
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&configPath, "set", "s", "", "set config file path")
