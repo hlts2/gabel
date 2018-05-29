@@ -70,7 +70,6 @@ func (c *Config) StringTables() string {
 		out = append(out, "\n"...)
 	}
 
-	out = out[:len(out)-1]
 	return *(*string)(unsafe.Pointer(&out))
 }
 

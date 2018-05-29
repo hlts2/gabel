@@ -73,7 +73,7 @@ func TestStringTables(t *testing.T) {
 		config   *Config
 	}{
 		{
-			expected: "dog: 1\ncat: 2",
+			expected: "dog: 1\ncat: 2\n",
 			config: &Config{
 				Tables: Tables{
 					{
