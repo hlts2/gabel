@@ -53,3 +53,13 @@ func (c *Config) ValidateLabels(labels []string) bool {
 	}
 	return true
 }
+
+// StringTables returns string tables. The return value format is "key: value"
+func (c *Config) StringTables() string {
+	var out string
+	for _, table := range c.Tables {
+		out += table.Name + ": " + table.Label + "\n"
+	}
+
+	return out
+}

@@ -29,11 +29,14 @@ func NewGabel(config *Config, csv *CSV, templator Templator) *Gabel {
 func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 	scanner := bufio.NewScanner(in)
 
+	stringTables := g.config.StringTables()
+
 	for i := range g.csv.Records {
 	Back:
 
 		// TODO output record
 		io.WriteString(out, "")
+		io.WriteString(out, stringTables)
 		io.WriteString(out, ">>> ")
 
 		labels := strings.Split(",", scanner.Text())
