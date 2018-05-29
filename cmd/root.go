@@ -28,7 +28,7 @@ var rootCmd = &cobra.Command{
 			return ""
 		})
 
-		return g.Run()
+		return g.Run(os.Stdin, os.Stdout)
 	},
 }
 

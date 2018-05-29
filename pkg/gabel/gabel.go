@@ -1,5 +1,11 @@
 package gabel
 
+import (
+	"bufio"
+	"io"
+	"strings"
+)
+
 // Templator is text displayed template
 type Templator func() string
 
@@ -20,6 +26,25 @@ func NewGabel(config *Config, csv *CSV, templator Templator) *Gabel {
 }
 
 // Run starts labeling
-func (g *Gabel) Run() error {
+func (g *Gabel) Run(in io.Reader, out io.Writer) error {
+	scanner := bufio.NewScanner(in)
+
+	for i := range g.csv.Records {
+	Back:
+
+		// TODO output record
+		io.WriteString(out, "")
+		io.WriteString(out, ">>> ")
+
+		labels := strings.Split(",", scanner.Text())
+
+		if !g.config.ValidateLabels(labels) {
+			io.WriteString(out, "Invalid label")
+			goto Back
+		}
+
+		g.csv.Records[i] = append(g.csv.Records[i], labels...)
+	}
+
 	return nil
 }
