@@ -33,7 +33,6 @@ func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 	stringTables := g.config.StringTables()
 
 	for i := range g.csv.Records {
-	Back:
 
 		// TODO output record
 		writer.WriteString("")
@@ -41,10 +40,12 @@ func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 		writer.WriteString(">>> ")
 		writer.Flush()
 
+	Back:
 		labels := strings.Split(",", scanner.Text())
 
 		if !g.config.ValidateLabels(labels) {
-			writer.WriteString("Invlid label")
+			writer.WriteString("Invlid label\n")
+			writer.WriteString(">>> ")
 			writer.Flush()
 			goto Back
 		}
