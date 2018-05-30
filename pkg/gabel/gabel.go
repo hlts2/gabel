@@ -28,8 +28,7 @@ func NewGabel(config *Config, csv *CSV, templator Templator) *Gabel {
 
 // Run starts labeling
 func (g *Gabel) Run(in io.Reader, out io.Writer) error {
-	scanner := bufio.NewScanner(in)
-	writer := bufio.NewWriter(out)
+	scanner, writer := bufio.NewScanner(in), bufio.NewWriter(out)
 
 	tmpl, err := template.New("gabel").Parse(g.templator())
 	if err != nil {
