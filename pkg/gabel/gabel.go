@@ -30,7 +30,7 @@ func NewGabel(config *Config, csv *CSV, templator Templator) *Gabel {
 func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 	scanner, writer := bufio.NewScanner(in), bufio.NewWriter(out)
 
-	tmpl, err := template.New("gabel").Parse(g.templator())
+	tmpl, err := template.New(AppName).Parse(g.templator())
 	if err != nil {
 		return err
 	}
