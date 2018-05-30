@@ -8,8 +8,11 @@ import (
 
 // CSV is csv object of test data
 type CSV struct {
-	Records [][]string
+	Records []Record
 }
+
+// Record is the csv record
+type Record []string
 
 // NewCSV returns CSV object from given the path
 func NewCSV(path string) (*CSV, error) {
@@ -26,7 +29,7 @@ func NewCSV(path string) (*CSV, error) {
 	}
 
 	c := &CSV{
-		Records: make([][]string, 0, recordCnt),
+		Records: make([]Record, 0, recordCnt),
 	}
 
 	for {
