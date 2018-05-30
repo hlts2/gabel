@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io"
 	"strings"
+	"text/template"
 )
 
 // Templator is text displayed template
@@ -30,12 +31,16 @@ func (g *Gabel) Run(in io.Reader, out io.Writer) error {
 	scanner := bufio.NewScanner(in)
 	writer := bufio.NewWriter(out)
 
+	tmpl, err := template.New("gabel").Parse(g.templator())
+	if err != nil {
+		return err
+	}
+
 	stringTables := g.config.StringTables()
 
-	for i := range g.csv.Records {
+	for i, record := range g.csv.Records {
 
-		// TODO output record
-		writer.WriteString("")
+		tmpl.Execute(writer, record)
 		writer.WriteString(stringTables)
 		writer.WriteString(">>> ")
 		writer.Flush()
