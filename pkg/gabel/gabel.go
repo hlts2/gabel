@@ -12,49 +12,49 @@ type Templator func() string
 
 // Gabel is core struct of gabel
 type Gabel struct {
-	config    *Config
-	csv       *CSV
-	templator Templator
+	scanner *bufio.Scanner
+	writer  *bufio.Writer
+	config  *Config
+	csv     *CSV
 }
 
 // NewGabel returns Gabel object
-func NewGabel(config *Config, csv *CSV, templator Templator) *Gabel {
+func NewGabel(in io.Reader, out io.Writer, config *Config, csv *CSV) *Gabel {
 	return &Gabel{
-		config:    config,
-		csv:       csv,
-		templator: templator,
+		scanner: bufio.NewScanner(in),
+		writer:  bufio.NewWriter(out),
+		config:  config,
+		csv:     csv,
 	}
 }
 
 // Run starts labeling
-func (g *Gabel) Run(in io.Reader, out io.Writer) error {
-	scanner, writer := bufio.NewScanner(in), bufio.NewWriter(out)
-
-	tmpl, err := template.New(AppName).Parse(g.templator())
+func (g *Gabel) Run(startPos, endPos int, templator Templator) error {
+	tmpl, err := template.New(AppName).Parse(templator())
 	if err != nil {
 		return err
 	}
 
 	stringTables := g.config.StringTables()
 
-	for i, record := range g.csv.Records {
-
-		tmpl.Execute(writer, record)
-		writer.WriteString(stringTables)
-		writer.WriteString(">>> ")
-		writer.Flush()
+	for i := startPos; i < endPos; i++ {
+		tmpl.Execute(g.writer, g.csv.Records[i])
+		g.writer.WriteString(stringTables)
+		g.writer.WriteString(">>> ")
+		g.writer.Flush()
 
 	Back:
-		labels := strings.Split(",", scanner.Text())
+		labels := strings.Split(",", g.scanner.Text())
 
 		if !g.config.ValidateLabels(labels) {
-			writer.WriteString("Invlid label\n")
-			writer.WriteString(">>> ")
-			writer.Flush()
+			g.writer.WriteString("Invlid label\n")
+			g.writer.WriteString(">>> ")
+			g.writer.Flush()
 			goto Back
 		}
 
 		g.csv.Records[i] = append(g.csv.Records[i], labels...)
+
 	}
 
 	return nil

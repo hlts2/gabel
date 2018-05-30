@@ -30,11 +30,11 @@ func Run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	g := gabel.NewGabel(config, csv, func() string {
+	g := gabel.NewGabel(os.Stdin, os.Stdout, config, csv)
+
+	return g.Run(0, len(csv.Records), func() string {
 		return ""
 	})
-
-	return g.Run(os.Stdin, os.Stdout)
 }
 
 func init() {
