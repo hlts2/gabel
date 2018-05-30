@@ -5,6 +5,8 @@ import (
 	"io"
 	"strings"
 	"text/template"
+
+	"github.com/pkg/errors"
 )
 
 // Templator is text displayed template
@@ -16,29 +18,31 @@ type Gabel struct {
 	writer  *bufio.Writer
 	config  *Config
 	csv     *CSV
+	tmpl    *template.Template
 }
 
 // NewGabel returns Gabel object
-func NewGabel(in io.Reader, out io.Writer, config *Config, csv *CSV) *Gabel {
+func NewGabel(in io.Reader, out io.Writer, config *Config, csv *CSV, templator Templator) (*Gabel, error) {
+	tmpl, err := template.New(AppName).Parse(templator())
+	if err != nil {
+		return nil, errors.Wrap(err, "faild to create object")
+	}
+
 	return &Gabel{
 		scanner: bufio.NewScanner(in),
 		writer:  bufio.NewWriter(out),
 		config:  config,
 		csv:     csv,
-	}
+		tmpl:    tmpl,
+	}, nil
 }
 
 // Run starts labeling
-func (g *Gabel) Run(startPos, endPos int, templator Templator) error {
-	tmpl, err := template.New(AppName).Parse(templator())
-	if err != nil {
-		return err
-	}
-
+func (g *Gabel) Run(startPos, endPos int) error {
 	stringTables := g.config.StringTables()
 
 	for i := startPos; i < endPos; i++ {
-		tmpl.Execute(g.writer, g.csv.Records[i])
+		g.tmpl.Execute(g.writer, g.csv.Records[i])
 		g.writer.WriteString(stringTables)
 		g.writer.WriteString(">>> ")
 		g.writer.Flush()
