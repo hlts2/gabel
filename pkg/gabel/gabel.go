@@ -22,7 +22,7 @@ type Gabel struct {
 func NewGabel(sw ScanWriter, config Config, csv *CSV, templator Templator) (*Gabel, error) {
 	tmpl, err := template.New(AppName).Parse(templator())
 	if err != nil {
-		return nil, errors.Wrap(err, "faild to NewGabel")
+		return nil, errors.Wrap(err, "faild to create gabel object")
 	}
 
 	return &Gabel{
