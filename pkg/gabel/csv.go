@@ -20,10 +20,13 @@ func NewCSV(path string) (*CSV, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer f.Close()
 
 	r := csv.NewReader(f)
 
 	recordCnt, err := getRecordCount(r)
+	f.Seek(0, 0)
+
 	if err != nil {
 		return nil, err
 	}

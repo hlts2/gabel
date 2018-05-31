@@ -4,7 +4,7 @@ import (
 	"os"
 	"unsafe"
 
-	"gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v2"
 )
 
 // Config is CLI config object
@@ -30,7 +30,7 @@ func LoadConfig(config *Config, path string) error {
 	}
 	defer f.Close()
 
-	err = yaml.NewDecoder(f).Decode(&config)
+	err = yaml.NewDecoder(f).Decode(config)
 	if err != nil {
 		return err
 	}

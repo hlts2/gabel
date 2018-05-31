@@ -18,20 +18,20 @@ var rootCmd = &cobra.Command{
 
 // Run executes gabel command
 func Run(cmd *cobra.Command, args []string) error {
-	var config *gabel.Config
+	var config gabel.Config
 
-	err := gabel.LoadConfig(config, configPath)
+	err := gabel.LoadConfig(&config, configPath)
 	if err != nil {
 		return err
 	}
 
-	csv, err := gabel.NewCSV(configPath)
+	csv, err := gabel.NewCSV(config.Path)
 	if err != nil {
 		return err
 	}
 
-	g, err := gabel.NewGabel(os.Stdin, os.Stdout, config, csv, func() string {
-		return ""
+	g, err := gabel.NewGabel(os.Stdin, os.Stdout, &config, csv, func() string {
+		return "\"{{index $ 0}}\"\n"
 	})
 	if err != nil {
 		return err
