@@ -30,7 +30,9 @@ func Run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	g, err := gabel.NewGabel(os.Stdin, os.Stdout, &config, csv, func() string {
+	sw := gabel.NewScanWriter(os.Stdin, os.Stdout)
+
+	g, err := gabel.NewGabel(sw, config, csv, func() string {
 		return "\"{{index $ 0}}\"\n"
 	})
 	if err != nil {

@@ -16,7 +16,7 @@ type Templator func() string
 type Gabel struct {
 	sw     *ScanWriter
 	config Config
-	csv    CSV
+	csv    *CSV
 	tmpl   template.Template
 }
 
@@ -41,7 +41,7 @@ func (sw *ScanWriter) ReadLine() string {
 }
 
 // NewGabel returns Gabel object
-func NewGabel(sw *ScanWriter, config Config, csv CSV, templator Templator) (*Gabel, error) {
+func NewGabel(sw *ScanWriter, config Config, csv *CSV, templator Templator) (*Gabel, error) {
 	tmpl, err := template.New(AppName).Parse(templator())
 	if err != nil {
 		return nil, errors.Wrap(err, "faild to NewGabel")
