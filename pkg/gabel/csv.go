@@ -27,11 +27,10 @@ func NewCSV(path string) (*CSV, error) {
 	r := csv.NewReader(f)
 
 	recordCnt, err := getRecordCount(r)
-	f.Seek(0, 0)
-
 	if err != nil {
 		return nil, err
 	}
+	f.Seek(0, 0)
 
 	c := &CSV{
 		Records: make([]Record, 0, recordCnt),
