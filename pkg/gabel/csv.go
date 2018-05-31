@@ -4,6 +4,8 @@ import (
 	"encoding/csv"
 	"io"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 // CSV is csv object of test data
@@ -18,7 +20,7 @@ type Record []string
 func NewCSV(path string) (*CSV, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "faild to open csv file")
 	}
 	defer f.Close()
 
@@ -40,7 +42,7 @@ func NewCSV(path string) (*CSV, error) {
 		if err == io.EOF {
 			break
 		} else if err != nil {
-			return nil, err
+			return nil, errors.Wrap(err, "faild to read csv file")
 		}
 
 		c.Records = append(c.Records, record)
@@ -55,7 +57,7 @@ func getRecordCount(reader *csv.Reader) (cnt int, err error) {
 		if err == io.EOF {
 			break
 		} else if err != nil {
-			return 0, err
+			return 0, errors.Wrap(err, "faild to read csv file")
 		}
 		cnt++
 	}

@@ -4,6 +4,7 @@ import (
 	"os"
 	"unsafe"
 
+	"github.com/pkg/errors"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -26,13 +27,13 @@ type Tables []Table
 func LoadConfig(config *Config, path string) error {
 	f, err := os.Open(path)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "faild to open config file")
 	}
 	defer f.Close()
 
 	err = yaml.NewDecoder(f).Decode(config)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "faild to decode cofig file")
 	}
 
 	return nil
