@@ -35,21 +35,21 @@ func NewGabel(sw ScanWriter, config Config, csv *CSV, templator Templator) (*Gab
 
 // Run starts labeling
 func (g *Gabel) Run(startPos, endPos int) error {
-	// stringTables := g.config.StringTables()
+	stringTables := g.config.StringTables()
 
 	for i := startPos; i < endPos; i++ {
-		// g.tmpl.Execute(g.sw.writer, g.csv.Records[i])
-		// g.sw.writer.WriteString(stringTables)
-		// g.sw.writer.WriteString(">>> ")
-		// g.sw.writer.Flush()
+		g.tmpl.Execute(g.sw, g.csv.Records[i])
+		g.sw.WriteString(stringTables)
+		g.sw.WriteString(">>> ")
+		g.sw.Flush()
 
 	Back:
 		labels := strings.Split(",", g.sw.ReadLine())
 
 		if !g.config.ValidateLabels(labels) {
-			// g.sw.writer.WriteString("Invlid label\n")
-			// g.sw.writer.WriteString(">>> ")
-			// g.sw.writer.Flush()
+			g.sw.WriteString("Invlid label\n")
+			g.sw.WriteString(">>> ")
+			g.sw.Flush()
 			goto Back
 		}
 
