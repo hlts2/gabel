@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// CSV is csv object of test data
+// CSV is csv object
 type CSV struct {
 	Records []Record
 }
