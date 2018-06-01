@@ -34,7 +34,7 @@ func TestReadLine(t *testing.T) {
 			t.Error("NewScanWriter is nil")
 		}
 
-		got := sw.ReadLine()
+		got, _ := sw.ReadLine()
 
 		if test.expected != got {
 			t.Errorf("ReadLine expected: %v, got: %v", test.expected, got)
