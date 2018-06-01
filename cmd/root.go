@@ -55,14 +55,3 @@ func init() {
 func Execute() {
 	rootCmd.Execute()
 }
-
-var helpText = `
-Usage:
-   gabel <option>
-
-Flags:
-   -h, --help  Help for Run Command
-               $ gabel --help
-   -s, --set   Set config file path
-               $ gabel -s config.yaml
-	`
