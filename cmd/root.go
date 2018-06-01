@@ -13,11 +13,16 @@ var configPath string
 var rootCmd = &cobra.Command{
 	Use:   "gabel",
 	Short: "gabel is a CLI tool for creating teacher data",
-	RunE:  Run,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := run(cmd, args); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	},
 }
 
 // Run executes gabel command
-func Run(cmd *cobra.Command, args []string) error {
+func run(cmd *cobra.Command, args []string) error {
 	var config gabel.Config
 
 	err := gabel.LoadConfig(&config, configPath)
@@ -48,10 +53,7 @@ func init() {
 
 // Execute executes the CLI application
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, err.Error())
-		os.Exit(1)
-	}
+	rootCmd.Execute()
 }
 
 var helpText = `

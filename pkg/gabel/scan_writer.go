@@ -2,12 +2,13 @@ package gabel
 
 import (
 	"bufio"
+	"errors"
 	"io"
 )
 
 // ScanWriter is the interface that wraps the basic Read method.
 type ScanWriter interface {
-	ReadLine() string
+	ReadLine() (string, error)
 	Write(p []byte) (int, error)
 	WriteString(s string) (int, error)
 	Flush() error
@@ -28,9 +29,12 @@ func NewScanWriter(in io.Reader, out io.Writer) ScanWriter {
 }
 
 // ReadLine returns line
-func (sw *scanWriter) ReadLine() string {
-	sw.scanner.Scan()
-	return sw.scanner.Text()
+func (sw *scanWriter) ReadLine() (string, error) {
+	if sw.scanner.Scan() {
+		return sw.scanner.Text(), sw.scanner.Err()
+	}
+
+	return "", errors.New("scan stopped")
 }
 
 // Write writes the contents of p into the buffer.

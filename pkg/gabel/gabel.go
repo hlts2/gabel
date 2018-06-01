@@ -46,7 +46,12 @@ func (g *Gabel) Run(startPos, endPos int) error {
 	Back:
 		// TODO Add processing to change past labels
 
-		labels := strings.Split(g.sw.ReadLine(), ",")
+		s, err := g.sw.ReadLine()
+		if err != nil {
+			return errors.Wrap(err, "faild to read line")
+		}
+
+		labels := strings.Split(s, ",")
 
 		if !g.config.ValidateLabels(labels) {
 			g.sw.WriteString("Invlid label\n")
