@@ -14,7 +14,30 @@ type CSV struct {
 }
 
 // Record is the csv record
-type Record []string
+type Record struct {
+	columns       []string
+	initialLength int
+}
+
+// Get returns columns
+func (r *Record) Get() []string {
+	return r.columns
+}
+
+// Append appends to the column
+func (r *Record) Append(values []string) {
+	r.columns = append(r.columns, values...)
+}
+
+// Reset reset columns to the initial state
+func (r *Record) Reset() {
+	r.columns = r.columns[:r.initialLength]
+}
+
+// IsUpdated returns true if the columns has been updated
+func (r *Record) IsUpdated() bool {
+	return len(r.columns) == r.initialLength
+}
 
 // NewCSV returns CSV object from given the path
 func NewCSV(path string) (*CSV, error) {
@@ -37,14 +60,17 @@ func NewCSV(path string) (*CSV, error) {
 	}
 
 	for {
-		record, err := r.Read()
+		columns, err := r.Read()
 		if err == io.EOF {
 			break
 		} else if err != nil {
 			return nil, errors.Wrap(err, "faild to read csv file")
 		}
 
-		c.Records = append(c.Records, record)
+		c.Records = append(c.Records, Record{
+			columns:       columns,
+			initialLength: len(columns),
+		})
 	}
 
 	return c, nil

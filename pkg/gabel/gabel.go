@@ -38,7 +38,7 @@ func (g *Gabel) Run(startPos, endPos int) error {
 	stringTables := g.config.StringTables()
 
 	for i := startPos; i < endPos; i++ {
-		g.tmpl.Execute(g.sw, g.csv.Records[i])
+		g.tmpl.Execute(g.sw, g.csv.Records[i].Get())
 		g.sw.WriteString(stringTables)
 		g.sw.WriteString(">>> ")
 		g.sw.Flush()
@@ -53,7 +53,14 @@ func (g *Gabel) Run(startPos, endPos int) error {
 			goto Back
 		}
 
-		g.csv.Records[i] = append(g.csv.Records[i], labels...)
+		record := g.csv.Records[i]
+
+		if record.IsUpdated() {
+			record.Reset()
+			record.Append(labels)
+		} else {
+			record.Append(labels)
+		}
 	}
 
 	return nil

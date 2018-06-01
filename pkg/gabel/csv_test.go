@@ -3,6 +3,7 @@ package gabel
 import (
 	"bytes"
 	"encoding/csv"
+	"reflect"
 	"testing"
 )
 
@@ -43,6 +44,61 @@ func TestGetRecordCount(t *testing.T) {
 
 		if test.expected != count {
 			t.Errorf("i = %d getRecordCount count expected: %v, got: %v", i, test.isError, isError)
+		}
+	}
+}
+
+func TestAppend(t *testing.T) {
+	tests := []struct {
+		record   *Record
+		values   []string
+		expected []string
+	}{
+		{
+			record: &Record{
+				columns: []string{"a", "b"},
+			},
+			values:   []string{"c"},
+			expected: []string{"a", "b", "c"},
+		},
+	}
+
+	for _, test := range tests {
+		test.record.Append(test.values)
+
+		got := test.record.Get()
+
+		if !reflect.DeepEqual(test.expected, got) {
+			t.Errorf("Append expected: %v, got %v", test.expected, got)
+		}
+	}
+}
+
+func TestReset(t *testing.T) {
+	tests := []struct {
+		record   *Record
+		values   []string
+		expected []string
+	}{
+		{
+			record: &Record{
+				columns:       []string{"a", "b"},
+				initialLength: 2,
+			},
+			values:   []string{"c", "d", "e"},
+			expected: []string{"a", "b"},
+		},
+	}
+
+	for _, test := range tests {
+		test.record.Append(test.values)
+
+		test.record.Reset()
+
+		got := test.record.Get()
+
+		if !reflect.DeepEqual(test.expected, got) {
+			t.Errorf("Reset expected: %v, got: %v", test.expected, got)
 		}
 	}
 }
