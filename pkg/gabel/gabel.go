@@ -44,6 +44,8 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		g.sw.Flush()
 
 	Back:
+		// TODO Add processing to change past labels
+
 		labels := strings.Split(",", g.sw.ReadLine())
 
 		if !g.config.ValidateLabels(labels) {
