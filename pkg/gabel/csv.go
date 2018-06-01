@@ -34,8 +34,8 @@ func (r *Record) Reset() {
 	r.columns = r.columns[:r.initialLength]
 }
 
-// IsUpdated returns true if the columns has been updated
-func (r *Record) IsUpdated() bool {
+// IsAppended returns true if the columns has been appended
+func (r *Record) IsAppended() bool {
 	return len(r.columns) != r.initialLength
 }
 

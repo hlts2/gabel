@@ -62,7 +62,7 @@ func (g *Gabel) Run(startPos, endPos int) error {
 
 		record := g.csv.Records[i]
 
-		if record.IsUpdated() {
+		if record.IsAppended() {
 			record.Reset()
 			record.Append(labels)
 		} else {
