@@ -46,6 +46,7 @@ func (c *Config) ValidateLabels(labels []string) bool {
 		for _, table := range c.Tables {
 			if lv == table.Label {
 				exist = true
+				break
 			}
 		}
 
