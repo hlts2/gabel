@@ -36,7 +36,7 @@ func (r *Record) Reset() {
 
 // IsUpdated returns true if the columns has been updated
 func (r *Record) IsUpdated() bool {
-	return len(r.columns) == r.initialLength
+	return len(r.columns) != r.initialLength
 }
 
 // NewCSV returns CSV object from given the path
