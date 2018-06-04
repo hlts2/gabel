@@ -10,7 +10,7 @@ import (
 
 // CSV is csv object
 type CSV struct {
-	Records []Record
+	Records []*Record
 }
 
 // Record is the csv record
@@ -56,7 +56,7 @@ func NewCSV(path string) (*CSV, error) {
 	f.Seek(0, 0)
 
 	c := &CSV{
-		Records: make([]Record, 0, recordCnt),
+		Records: make([]*Record, 0, recordCnt),
 	}
 
 	for {
@@ -67,7 +67,7 @@ func NewCSV(path string) (*CSV, error) {
 			return nil, errors.Wrap(err, "faild to read csv file")
 		}
 
-		c.Records = append(c.Records, Record{
+		c.Records = append(c.Records, &Record{
 			columns:       columns,
 			initialLength: len(columns),
 		})
