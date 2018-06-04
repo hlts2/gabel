@@ -7,6 +7,9 @@ import (
 	"github.com/pkg/errors"
 )
 
+// OutputFileName is output file name of labeling result
+var OutputFileName = "labeling_result.csv"
+
 // Templator is text displayed template
 type Templator func() string
 
@@ -70,7 +73,7 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		}
 	}
 
-	err := g.csv.WriteCSV("output.csv")
+	err := g.csv.WriteCSV(OutputFileName)
 	if err != nil {
 		return err
 	}
