@@ -89,3 +89,28 @@ func getRecordCount(reader *csv.Reader) (cnt int, err error) {
 
 	return cnt, nil
 }
+
+// WriteCSV writets records into the csv
+func (c *CSV) WriteCSV(path string) error {
+	f, err := os.Create(path)
+	if err != nil {
+		return errors.Wrap(err, "faild to create file")
+	}
+	defer f.Close()
+
+	err = f.Truncate(0)
+	if err != nil {
+		return errors.Wrap(err, "faild to truncate file")
+	}
+
+	writer := csv.NewWriter(f)
+	for _, record := range c.Records {
+		if err := writer.Write(record.columns); err != nil {
+			return errors.Wrap(err, "faild to write record into the csv file")
+		}
+
+		writer.Flush()
+	}
+
+	return nil
+}

@@ -70,5 +70,10 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		}
 	}
 
+	err := g.csv.WriteCSV("output.csv")
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
