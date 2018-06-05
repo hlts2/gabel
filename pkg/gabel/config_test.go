@@ -19,12 +19,19 @@ func TestLoadConfig(t *testing.T) {
 		Path: "example.csv",
 		Tables: Tables{
 			{
-				Name:  "fail",
-				Label: "0",
+				Name:             "fail",
+				ModificationFlag: false,
+				Label:            "0",
 			},
 			{
-				Name:  "success",
-				Label: "1",
+				Name:             "success",
+				ModificationFlag: false,
+				Label:            "1",
+			},
+			{
+				Name:             "modify past label",
+				ModificationFlag: true,
+				Label:            "-1",
 			},
 		},
 	}
