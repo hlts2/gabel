@@ -17,6 +17,7 @@ type Config struct {
 // Table is correspondence table of label
 type Table struct {
 	Name  string `yaml:"name"`
+	Flag  bool   `yaml:"flag"`
 	Label string `yaml:"label"`
 }
 
