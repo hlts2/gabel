@@ -16,9 +16,9 @@ type Config struct {
 
 // Table is correspondence table of label
 type Table struct {
-	Name  string `yaml:"name"`
-	Flag  bool   `yaml:"modify_flag"`
-	Label string `yaml:"label"`
+	Name             string `yaml:"name"`
+	ModificationFlag bool   `yaml:"modification_flag"`
+	Label            string `yaml:"label"`
 }
 
 // Tables is Table slice
@@ -45,7 +45,7 @@ func (c *Config) ValidateLabels(labels []string) bool {
 	for _, lv := range labels {
 		exist := false
 		for _, table := range c.Tables {
-			if lv == table.Label && !table.Flag {
+			if lv == table.Label && !table.ModificationFlag {
 				exist = true
 				break
 			}
@@ -56,6 +56,16 @@ func (c *Config) ValidateLabels(labels []string) bool {
 		}
 	}
 	return true
+}
+
+// IsModificationLabel is true if the label is a label with modification flag set
+func (c *Config) IsModificationLabel(label string) bool {
+	for _, table := range c.Tables {
+		if table.Label == label {
+			return true
+		}
+	}
+	return false
 }
 
 // StringTables returns string tables. The return value format is "[Label] Name\n[Label] Name\n"

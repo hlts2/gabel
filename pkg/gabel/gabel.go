@@ -47,8 +47,6 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		g.sw.Flush()
 
 	Back:
-		// TODO Add processing to change past labels
-
 		s, err := g.sw.ReadLine()
 		if err != nil {
 			return errors.Wrap(err, "faild to read line")
@@ -61,6 +59,8 @@ func (g *Gabel) Run(startPos, endPos int) error {
 			g.sw.WriteString(">>> ")
 			g.sw.Flush()
 			goto Back
+		} else if g.config.IsModificationLabel(labels[0]) {
+			// TODO Add processing to change past labels
 		}
 
 		record := g.csv.Records[i]
