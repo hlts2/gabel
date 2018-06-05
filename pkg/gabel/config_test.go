@@ -135,3 +135,41 @@ func TestTableFieldSize(t *testing.T) {
 	}
 
 }
+
+func TestIsModificationLabel(t *testing.T) {
+	tests := []struct {
+		label    string
+		config   *Config
+		expected bool
+	}{
+		{
+			label: "-1",
+			config: &Config{
+				Tables: Tables{
+					{
+						Name:  "dog",
+						Label: "1",
+					},
+					{
+						Name:  "cat",
+						Label: "2",
+					},
+					{
+						Name:             "modify past label",
+						ModificationFlag: true,
+						Label:            "-1",
+					},
+				},
+			},
+			expected: true,
+		},
+	}
+
+	for _, test := range tests {
+		got := test.config.IsModificationLabel(test.label)
+
+		if test.expected != got {
+			t.Errorf("IsModificationLabel expected: %v, got: %v", test.expected, got)
+		}
+	}
+}

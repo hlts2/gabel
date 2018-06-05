@@ -54,13 +54,13 @@ func (g *Gabel) Run(startPos, endPos int) error {
 
 		labels := strings.Split(s, ",")
 
-		if !g.config.ValidateLabels(labels) {
+		if g.config.IsModificationLabel(labels[0]) {
+			// TODO Add processing to change past labels
+		} else if !g.config.ValidateLabels(labels) {
 			g.sw.WriteString("Invlid label\n")
 			g.sw.WriteString(">>> ")
 			g.sw.Flush()
 			goto Back
-		} else if g.config.IsModificationLabel(labels[0]) {
-			// TODO Add processing to change past labels
 		}
 
 		record := g.csv.Records[i]
