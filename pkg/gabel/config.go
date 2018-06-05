@@ -17,7 +17,7 @@ type Config struct {
 // Table is correspondence table of label
 type Table struct {
 	Name  string `yaml:"name"`
-	Flag  bool   `yaml:"flag"`
+	Flag  bool   `yaml:"modify_flag"`
 	Label string `yaml:"label"`
 }
 
@@ -45,7 +45,7 @@ func (c *Config) ValidateLabels(labels []string) bool {
 	for _, lv := range labels {
 		exist := false
 		for _, table := range c.Tables {
-			if lv == table.Label {
+			if lv == table.Label && !table.Flag {
 				exist = true
 				break
 			}

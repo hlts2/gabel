@@ -5,3 +5,7 @@ tables:
 
  - name: "success"
    label: "1"
+
+ - name: "modify past label"
+   modify_flag: true
+   label: "-1"
