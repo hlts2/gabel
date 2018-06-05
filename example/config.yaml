@@ -7,5 +7,5 @@ tables:
    label: "1"
 
  - name: "modify past label"
-   modify_flag: true
+   modification_flag: true
    label: "-1"
