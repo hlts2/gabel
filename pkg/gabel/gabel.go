@@ -99,13 +99,13 @@ func (g *Gabel) getRecordNumber(endPos int) (int, error) {
 
 		n, err := strconv.Atoi(s)
 		if err != nil {
-			g.sw.WriteString("Invalid number")
+			g.sw.WriteString("Invalid number\n")
 			g.sw.Flush()
 			goto ReEnter
 		}
 
 		if n < 0 || n > endPos {
-			g.sw.WriteString("Invalid number")
+			g.sw.WriteString("Invalid number\n")
 			g.sw.Flush()
 			goto ReEnter
 		}
