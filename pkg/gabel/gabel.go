@@ -87,7 +87,7 @@ func (g *Gabel) Run(startPos, endPos int) error {
 // GenerateCSV create csv file
 func (g *Gabel) GenerateCSV(path string) error {
 	if err := g.csv.WriteCSV(path); err != nil {
-		return errors.Wrap(err, "faild to write csv")
+		return errors.Wrap(err, "faild to generate csv file")
 	}
 	return nil
 }
