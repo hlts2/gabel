@@ -62,7 +62,9 @@ func (g *Gabel) Run(startPos, endPos int) error {
 				return err
 			}
 
-			g.Run(n, n+1)
+			if err := g.Run(n, n+1); err != nil {
+				return err
+			}
 
 			goto Back
 		} else if !g.config.ValidateLabels(labels) {
