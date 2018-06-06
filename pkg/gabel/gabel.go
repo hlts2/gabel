@@ -1,6 +1,7 @@
 package gabel
 
 import (
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -41,12 +42,13 @@ func (g *Gabel) Run(startPos, endPos int) error {
 	stringTables := g.config.StringTables()
 
 	for i := startPos; i < endPos; i++ {
+	Back:
 		g.tmpl.Execute(g.sw, g.csv.Records[i].Get())
 		g.sw.WriteString(stringTables)
 		g.sw.WriteString(">>> ")
 		g.sw.Flush()
 
-	Back:
+	ReEnter:
 		s, err := g.sw.ReadLine()
 		if err != nil {
 			return errors.Wrap(err, "faild to read line")
@@ -55,12 +57,19 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		labels := strings.Split(s, ",")
 
 		if g.config.IsModificationLabel(labels[0]) {
-			// TODO Add processing to change past labels
+			n, err := g.getRecordNumber(i)
+			if err != nil {
+				return err
+			}
+
+			g.Run(n, n+1)
+
+			goto Back
 		} else if !g.config.ValidateLabels(labels) {
 			g.sw.WriteString("Invlid label\n")
 			g.sw.WriteString(">>> ")
 			g.sw.Flush()
-			goto Back
+			goto ReEnter
 		}
 
 		record := g.csv.Records[i]
@@ -73,10 +82,34 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		}
 	}
 
-	// err := g.csv.WriteCSV(OutputFileName)
-	// if err != nil {
-	// 	return err
-	// }
-
 	return nil
+}
+
+func (g *Gabel) getRecordNumber(endPos int) (int, error) {
+	for {
+
+	ReEnter:
+		g.sw.WriteString(">>> ")
+		g.sw.Flush()
+
+		s, err := g.sw.ReadLine()
+		if err != nil {
+			return 0, errors.Wrap(err, "faild to read line")
+		}
+
+		n, err := strconv.Atoi(s)
+		if err != nil {
+			g.sw.WriteString("Invalid number")
+			g.sw.Flush()
+			goto ReEnter
+		}
+
+		if n < 0 || n > endPos {
+			g.sw.WriteString("Invalid number")
+			g.sw.Flush()
+			goto ReEnter
+		}
+
+		return n, nil
+	}
 }

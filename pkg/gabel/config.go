@@ -61,7 +61,7 @@ func (c *Config) ValidateLabels(labels []string) bool {
 // IsModificationLabel is true if the label is a label with modification flag set
 func (c *Config) IsModificationLabel(label string) bool {
 	for _, table := range c.Tables {
-		if table.Label == label {
+		if table.Label == label && table.ModificationFlag {
 			return true
 		}
 	}
