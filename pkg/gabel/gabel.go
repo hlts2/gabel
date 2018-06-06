@@ -8,9 +8,6 @@ import (
 	"github.com/pkg/errors"
 )
 
-// OutputFileName is output file name of labeling result
-var OutputFileName = "labeling_result.csv"
-
 // Templator is text displayed template
 type Templator func() string
 
@@ -84,6 +81,14 @@ func (g *Gabel) Run(startPos, endPos int) error {
 		}
 	}
 
+	return nil
+}
+
+// GenerateCSV create csv file
+func (g *Gabel) GenerateCSV(path string) error {
+	if err := g.csv.WriteCSV(path); err != nil {
+		return errors.Wrap(err, "faild to write csv")
+	}
 	return nil
 }
 

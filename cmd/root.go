@@ -9,6 +9,7 @@ import (
 )
 
 var configPath string
+var outputFileN string
 
 var rootCmd = &cobra.Command{
 	Use:   "gabel",
@@ -44,11 +45,22 @@ func run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return g.Run(0, len(csv.Records))
+	err = g.Run(0, len(csv.Records))
+	if err != nil {
+		return err
+	}
+
+	err = g.WriteCSV(outputFileN)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&configPath, "set", "s", "", "set config file path")
+	rootCmd.PersistentFlags().StringVarP(&outputFileN, "output", "o", "output.csv", "set output file path")
 }
 
 // Execute executes the CLI application
