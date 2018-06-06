@@ -40,6 +40,7 @@ func (g *Gabel) Run(startPos, endPos int) error {
 
 	for i := startPos; i < endPos; i++ {
 	Back:
+		g.sw.WriteString("\nNo." + strconv.Itoa(i) + "\n")
 		g.tmpl.Execute(g.sw, g.csv.Records[i].Get())
 		g.sw.WriteString(stringTables)
 		g.sw.WriteString(">>> ")
