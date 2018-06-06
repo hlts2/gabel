@@ -50,7 +50,7 @@ func run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	err = g.WriteCSV(outputFileN)
+	err = g.GenerateCSV(outputFileN)
 	if err != nil {
 		return err
 	}
